@@ -1,3 +1,0 @@
-C:/Users/elise/OneDrive/Segovia/Important Files/SMU/0.My Classes/Algos/Programming_Assignments/pa4-ex2/Tweet-Analysis-pt2/cmake-build-debug/CMakeFiles/Tweet_Analysis_pt2.dir
-C:/Users/elise/OneDrive/Segovia/Important Files/SMU/0.My Classes/Algos/Programming_Assignments/pa4-ex2/Tweet-Analysis-pt2/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/elise/OneDrive/Segovia/Important Files/SMU/0.My Classes/Algos/Programming_Assignments/pa4-ex2/Tweet-Analysis-pt2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
