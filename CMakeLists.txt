@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Tweet_Analysis_pt2
         README.md main.cpp util/Word.cpp util/RBTree.h util/bstNode.h porter2_stemmer/porter2_stemmer.cpp util/TweetData.cpp
-        util/Classifier.h)
+        util/Classifier.h util/TrivialDS.cpp util/functions.cpp util/BayesClassifier.cpp util/KNNClassifier.cpp util/Plot.cpp)

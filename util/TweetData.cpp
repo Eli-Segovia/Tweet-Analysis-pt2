@@ -3,38 +3,6 @@
 //
 #include "TweetData.h"
 
-void remove(std::string& word){ // problem here.
-    if(word.size() > 0){
-
-        if(word.at(0) == ':'){
-            word.erase(0,1);
-        }
-        if(word.at(0) == '+'){
-            word.erase(0,1);
-        }
-
-        while( (word.find("&quot;") >= 0 && word.find("&quot;") <= word.size()) ){
-            word.erase(word.find("&quot;"), 6);
-        }
-        while( (word.find("\"") >= 0 && word.find("\"") <= word.size()) ){
-            word.erase(word.find("\""), 1);
-        }
-        while( (word.find("*") >= 0 && word.find("*") <= word.size()) ){
-            word.erase(word.find("*"), 1);
-        }
-        while( (word.find("&lt;") >= 0 && word.find("&lt;") <= word.size()) ){
-            word.erase(word.find("&lt;"), 4);
-        }while( (word.find("&gt;") >= 0 && word.find("&gt;") <= word.size()) ){
-            word.erase(word.find("&gt;"), 4);
-        }
-        while( (word.find("&amp;") >= 0 && word.find("&amp;") <= word.size()) ){
-            word.erase(word.find("&amp;"), 5);
-        }
-    }
-
-}
-
-
 TweetData::TweetData(){
     readStopWords();
 }
@@ -77,19 +45,20 @@ void TweetData::train(std::string trainFile, std::string testFile){
     std::string ln_input2;
     std::getline(input1, ln_input1);
     std::getline(input2, ln_input2);
-
+    int i = 0;
     while(std::getline(input1, ln_input1) && std::getline(input2,ln_input2)){
         std::istringstream iss1(ln_input1);
         std::istringstream iss2(ln_input2);
         while(std::getline(iss1, ln_input1, ','));
         std::getline(iss2, ln_input2, ',');
         std::getline(iss2, ln_input2, ',');
-
         switch(std::atoi(ln_input2.c_str())){
             case 4:
+                this->positiveTweets++;
                 isPositive = 1;
                 break;
             case 0:
+                this->negativeTweets++;
                 isPositive = 0;
                 break;
         }
@@ -116,6 +85,8 @@ void TweetData::copy(){
         std::getline(iss, pos);
         Word w(word);
         w.setTotalCnt(std::atoi(tot.c_str()));
+        this->positiveTweets += std::atoi(pos.c_str());
+        this->negativeTweets += std::atoi(neg.c_str());
         w.setNegativeCnt(std::atoi(neg.c_str()));
         w.setPositiveCnt(std::atoi(pos.c_str()));
         this->words.add(w);
@@ -126,6 +97,7 @@ void TweetData::checkLine(std::string & line, bool pos){
     std::istringstream iss(line);
     std::string word;
     while(std::getline(iss, word,  ' ')){
+        if(word.size() < 3) continue;
         remove(word);
         Word w(word);
         w.stem();

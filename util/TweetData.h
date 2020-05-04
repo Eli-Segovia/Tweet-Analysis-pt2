@@ -9,12 +9,15 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include "functions.h"
 
 class TweetData {
 private:
     RBTree<Word> words;
     RBTree<std::string> ignore;
     void readStopWords();
+    int positiveTweets = 0;
+    int negativeTweets = 0;
 public:
     TweetData();
     void addWord(Word newWord);
@@ -25,6 +28,10 @@ public:
     void train(std::string trainFil, std::string testFile);
     void copy();
     void outputData();
+
+    int getPositiveTweets(){return this->positiveTweets;}
+    int getNegativeTweets(){return this->negativeTweets;}
+    int getTotalTweets()   {return positiveTweets + negativeTweets;}
 };
 
 
