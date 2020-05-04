@@ -113,3 +113,13 @@ bool choose(){
     else return choice;
 }
 
+bool chooseTrain(){
+    std::string choices;
+    std::cout << "Do you want to retrain or use previous training?" << std::endl;
+    std::cout << "1) Retrain" << std::endl << "0) Use Previous training" << std::endl;
+    std::getline(std::cin, choices);
+    int choice = std::atoi(choices.c_str());
+    if(!(choice == 1 || choice == 0)){throw std::invalid_argument(choice + " is not a valid choice");}
+    else return choice;
+}
+

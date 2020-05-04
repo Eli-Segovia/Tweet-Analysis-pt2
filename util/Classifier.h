@@ -16,6 +16,7 @@ protected:
     int total = 0;
     int correct = 0;
     bool reClassify;
+    bool reTrain = 0;
     bool mode = 1;
 
 public:
@@ -25,7 +26,6 @@ public:
         this->targetTrain = trainTarget;
         this->dataFile    =        data;
         this->targetFile  =      target;
-        loadData();
     }
 
     virtual void selectMode(bool choice){
@@ -33,11 +33,16 @@ public:
         this->reClassify = choice;
     }
 
+    virtual void trainMode(bool choice){
+        this->reTrain = choice;
+        loadData();
+    }
+
 
 
     virtual void loadData(){
         std::ifstream inFile("tweetData.csv");
-        if(!inFile.is_open()){
+        if(!inFile.is_open() || reTrain == 1){
             std::cout << "training..." << std::endl;
             tweetData.train(this->trainData, this->targetTrain);
             tweetData.outputData();
