@@ -19,7 +19,7 @@ public:
     : Classifier(trainData, trainTarget, data, target){plotTrain();}
 
     void plotTrain();
-    bool getKNearest(double, double, int kth = k);
+    char getKNearest(double, double, int kth = k);
 
     void plotPoints(double, double, bool);
 

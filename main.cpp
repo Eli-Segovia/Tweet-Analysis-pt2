@@ -12,7 +12,7 @@
 int main(){
    bool choice  = choose();
    bool choice2 = chooseTrain();
-    Classifier* cc = new BayesClassifier("../data/dev-train-data.csv",
+    Classifier* cc = new KNNClassifier("../data/dev-train-data.csv",
                                    "../data/dev-train-target.csv",
                                    "../data/dev-test-data.csv",
                                    "../data/dev-test-target.csv");

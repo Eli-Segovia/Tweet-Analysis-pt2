@@ -58,6 +58,7 @@ void KNNClassifier::plotTrain() {
 
 void KNNClassifier::plotPoints(double posScore, double negScore, bool pos){
     this->plot.push_back(std::pair<double,bool>(std::sqrt((posScore * posScore) + (negScore * negScore)),pos));
+   // std::cout << plot.at(plot.size() - 1).first << std::endl;
 }
 
 void KNNClassifier::checklinePlot(std::string &line, std::string& line2) {
@@ -148,11 +149,58 @@ void KNNClassifier::checkline(std::string &line) {
     of.close();
 }
 
-bool KNNClassifier::getKNearest(double posV, double negV, int kth) {
+char KNNClassifier::getKNearest(double posV, double negV, int kth) {
+    double value = std::sqrt((posV * posV) + (negV * negV));
+    std::vector<int> values;
+    for(auto kValue : this->plot){
+        if(values.size() == 3) break;
+        if(std::abs(kValue.first - value) <= 0.001){
+            values.push_back(kValue.second);
+        }
+    }
+    double avg = 0;
+    for(auto i : values){
+        avg += i;
+    }
+    avg = avg / values.size();
+    //std::cout << avg << std::endl;
+    if(avg >= 0.5){
+        return '+';
+    }
+    else
+        return '-';
 
-    return 1;
 }
 
 void KNNClassifier::calculateAccuracy() {
-    std::cout << " Hello there you stupid ass bitch " << std::endl;
+    std::ofstream of;
+
+    std::ifstream inFile(this->targetFile);
+    std::ifstream inFile2("classify.txt");
+    if(!inFile.is_open() || !inFile2.is_open()){throw std::invalid_argument("Unable to locate files: " );}
+    std::string line;
+    std::string line2;
+    std::getline(inFile,line);
+    double accuracy = 0;
+    while(std::getline(inFile,line) && std::getline(inFile2, line2)){
+        char rating;
+        std::istringstream iss2(line2);
+        iss2 >> rating;
+        total++;
+        std::string rate;
+        std::istringstream iss(line);
+        std::getline(iss,rate,',');
+        std::getline(iss,rate,',');
+        if( (rating == '-' && rate == "0") || (rating == '+' && rate =="4")){
+            correct ++;
+        }
+    }
+    inFile. close();
+    inFile2.close();
+    of.open("accuracy.txt");
+    if(!of.is_open()){throw std::exception_ptr();}
+    accuracy = (double)correct / (double)total;
+    std::cout << correct << "/" << total << std::endl;
+    of << accuracy;
+    of.close();
 }
