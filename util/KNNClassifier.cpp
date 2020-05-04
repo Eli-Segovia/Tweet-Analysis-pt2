@@ -40,7 +40,6 @@ void KNNClassifier::plotTrain() {
         int i = 1;
 
         while(std::getline(trainFile, line1) && std::getline(trTargetFile, line2)){
-            std::cout << i++ << std::endl;
             std::istringstream iss1(line1);
             std::istringstream iss2(line2);
             while(std::getline(iss1, line1, ','));
@@ -99,6 +98,7 @@ std::pair<double,double> KNNClassifier::normalize(double &postiveBayes, double &
 }
 
 void KNNClassifier::classify() {
+    plotTrain();
     std::cout << "classifying tweets..." << std::endl;
     if(this->reClassify){
         std::cout << "Reclassifying..." << std::endl;
@@ -160,6 +160,7 @@ char KNNClassifier::getKNearest(double posV, double negV, int kth) {
     }
     double avg = 0;
     for(auto i : values){
+        std::cout << i << " dlkfjdkf" <<  std::endl;
         avg += i;
     }
     avg = avg / values.size();

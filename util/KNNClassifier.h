@@ -16,7 +16,7 @@ private:
 public:
 
     KNNClassifier(std::string trainData, std::string trainTarget, std::string data, std::string target)
-    : Classifier(trainData, trainTarget, data, target){plotTrain();}
+    : Classifier(trainData, trainTarget, data, target){}
 
     void plotTrain();
     char getKNearest(double, double, int kth = k);
