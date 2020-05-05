@@ -6,20 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/osboxes/Desktop/Tweet-Analysis-pt2/main.cpp
-iostream
--
-fstream
--
-util/Classifier.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/Classifier.h
-util/TrivialDS.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/TrivialDS.h
-util/BayesClassifier.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/BayesClassifier.h
-util/KNNClassifier.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/KNNClassifier.h
-
 /home/osboxes/Desktop/Tweet-Analysis-pt2/porter2_stemmer/porter2_stemmer.h
 vector
 -
@@ -50,6 +36,10 @@ stdexcept
 string
 -
 
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/BayesClassifier.cpp
+BayesClassifier.h
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/BayesClassifier.h
+
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/BayesClassifier.h
 Classifier.h
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/Classifier.h
@@ -58,12 +48,6 @@ Classifier.h
 TweetData.h
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/TweetData.h
 
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/KNNClassifier.h
-Classifier.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/Classifier.h
-math.h
--
-
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/RBTree.h
 iostream
 -
@@ -71,10 +55,6 @@ bstNode.h
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/bstNode.h
 vector
 -
-
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/TrivialDS.h
-Classifier.h
-/home/osboxes/Desktop/Tweet-Analysis-pt2/util/Classifier.h
 
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/TweetData.h
 RBTree.h
