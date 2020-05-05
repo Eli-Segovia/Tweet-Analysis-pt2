@@ -6,10 +6,10 @@
 
 int KNNClassifier::k = 3;
 
-void KNNClassifier::plotTrain() {
-    std::cout << "plotting train data (for KNN)" << std::endl;
-    std::ifstream inFIle("plot.txt");
-    if(inFIle.is_open()){
+void KNNClassifier::plotTrain() {                               //plotting the data gathered from training onto a "graph"
+    std::cout << "plotting train data (for KNN)" << std::endl;  // we will use this graph to compare to later determine
+    std::ifstream inFIle("plot.txt");                       // the proximity that the future tweets have with respect
+    if(inFIle.is_open()){                                      // to these plotted data.
         std::cout << " Using old plot" << std::endl;
         std::string line;
         while(std::getline(inFIle, line)){
@@ -29,7 +29,7 @@ void KNNClassifier::plotTrain() {
         inFIle.close();
     }
     else{
-        std::cout << "using new plot " << std::endl;
+        std::cout << "using new plot " << std::endl;             // uses a new plot rather than the existing one
         std::ifstream trainFile(this->trainData);
         std::ifstream trTargetFile(this->targetTrain);
         if(!(trainFile.is_open() && trTargetFile.is_open())){
@@ -55,14 +55,14 @@ void KNNClassifier::plotTrain() {
     }
 }
 
-void KNNClassifier::plotPoints(double posScore, double negScore, bool pos){
+void KNNClassifier::plotPoints(double posScore, double negScore, bool pos){   // plots the points as a vector
     this->plot.push_back(std::pair<double,bool>(std::sqrt((posScore * posScore) + (negScore * negScore)),pos));
    // std::cout << plot.at(plot.size() - 1).first << std::endl;
 }
 
 void KNNClassifier::checklinePlot(std::string &line, std::string& line2) {
-    std::ifstream iFile("plot.txt");
-    std::ofstream of;
+    std::ifstream iFile("plot.txt");                  // checks the statistics of the tweet and plots it by
+    std::ofstream of;                                  // calculating a score using the bayes method.
     if(iFile.is_open() && mode){
         mode = 0;
         of.open("plot.txt");
@@ -91,15 +91,15 @@ void KNNClassifier::checklinePlot(std::string &line, std::string& line2) {
 }
 
 std::pair<double,double> KNNClassifier::normalize(double &postiveBayes, double &negativeBayes) {
-    double evidenceValue = postiveBayes + negativeBayes;
-    double pos = postiveBayes  / evidenceValue;
+    double evidenceValue = postiveBayes + negativeBayes;   // normalizes the bayes values received by simply multiplying
+    double pos = postiveBayes  / evidenceValue;            // values
     double neg = negativeBayes / evidenceValue;
     return std::pair<double,double>(pos,neg);
 }
 
 void KNNClassifier::classify() {
-    plotTrain();
-    std::cout << "classifying tweets..." << std::endl;
+    plotTrain();                                                  // like the other ones, simply does some io stuff
+    std::cout << "classifying tweets..." << std::endl;           // and passes pertinent data to the the other methods.
     if(this->reClassify){
         std::cout << "Reclassifying..." << std::endl;
         std::ifstream inFile;
@@ -149,18 +149,17 @@ void KNNClassifier::checkline(std::string &line) {
     of.close();
 }
 
-char KNNClassifier::getKNearest(double posV, double negV, int kth) {
-    double value = std::sqrt((posV * posV) + (negV * negV));
-    std::vector<int> values;
-    for(auto kValue : this->plot){
-        if(values.size() == 3) break;
+char KNNClassifier::getKNearest(double posV, double negV, int kth) {  // finds the values with the smaller distances
+    double value = std::sqrt((posV * posV) + (negV * negV));        // based on the calculated score
+    std::vector<int> values;                                          // if the distance is small enough we consider
+    for(auto kValue : this->plot){                                 //it and determine the positivity based on the votes
+        if(values.size() == 3) break;                               // that the top three tweet plots have.
         if(std::abs(kValue.first - value) <= 0.001){
             values.push_back(kValue.second);
         }
     }
     double avg = 0;
     for(auto i : values){
-        std::cout << i << " dlkfjdkf" <<  std::endl;
         avg += i;
     }
     avg = avg / values.size();

@@ -4,8 +4,8 @@
 
 #include "TrivialDS.h"
 
-void TrivialDS::classify(){
-    std::cout << "classifying tweets..." << std::endl;
+void TrivialDS::classify(){                              // does some io stuff and passes information off to checkline
+    std::cout << "classifying tweets..." << std::endl;   // to do futher processing
     if(this->reClassify){
         std::cout << "Reclassifying..." << std::endl;
         std::ifstream inFile;
@@ -18,11 +18,11 @@ void TrivialDS::classify(){
             while(std::getline(iss, line, ','));
             checkline(line);
         }
-        calculateAccuracy();
+        calculateAccuracy();   // calculates the accuracy of the ratings
     }
     else{
-        std::cout << "using previous..." << std::endl;
-        calculateAccuracy();
+        std::cout << "using previous..." << std::endl;   // this uses previous classification data and simply calculates
+        calculateAccuracy();                             // the accuracy.
     }
 
 }
@@ -38,10 +38,10 @@ void TrivialDS::checkline(std::string& line){
     std::istringstream iss(line);
     std::string word;
     int sum = 0;
-    while(std::getline(iss, word,  ' ')){
-        if(word.size() < 3) continue;
-        remove(word);
-        Word w(word);
+    while(std::getline(iss, word,  ' ')){   // makes sure to remove any stop words and stems the worc
+        if(word.size() < 3) continue;                  // if tweet has a net of negatvie values, then it gets a negaive
+        remove(word);                               //score. if positive it gets a postive. The tweets overall score
+        Word w(word);                                // depends on the sum of the scores of trhe individual word.
         w.stem();
 
         if(this->tweetData.containsWord(w)){

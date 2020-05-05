@@ -3,11 +3,11 @@
 //
 #include "TweetData.h"
 
-TweetData::TweetData(){
+TweetData::TweetData(){         // fills up the stop words tree
     readStopWords();
 }
 
-void TweetData::readStopWords(){
+void TweetData::readStopWords(){               // reads the stop words.txt and puts it into the tree.
     std::ifstream inFile;
     inFile.open("../util/stopwords.txt");
     std::string line;
@@ -18,21 +18,21 @@ void TweetData::readStopWords(){
 }
 
 
-void TweetData::addWord(Word newWord){
+void TweetData::addWord(Word newWord){   // adds a new word to the words treee
     this->words.add(newWord);
 }
 
-bool TweetData::containsWord(Word word){
+bool TweetData::containsWord(Word word){  // chekcs if a word is within the tree
     return this->words.contains(word);
 }
 
-Word& TweetData::getWord(Word word){
+Word& TweetData::getWord(Word word){    // retruns a word by reference from the tree.
     return this->words.get(word);
 }
 
-void TweetData::train(std::string trainFile, std::string testFile){
-    bool isPositive;
-    std::ifstream input1;
+void TweetData::train(std::string trainFile, std::string testFile){  // trains the classifier by marking tweets
+    bool isPositive;                                                // as postivie or negative based on the words
+    std::ifstream input1;                                         // that are in that tweet.
     std::ifstream input2;
 
     input1.open(trainFile);
@@ -49,12 +49,15 @@ void TweetData::train(std::string trainFile, std::string testFile){
     while(std::getline(input1, ln_input1) && std::getline(input2,ln_input2)){
         std::istringstream iss1(ln_input1);
         std::istringstream iss2(ln_input2);
-        while(std::getline(iss1, ln_input1, ','));
+        std::getline(iss1, ln_input1, ',');
+        std::getline(iss1, ln_input1, ',');
+        std::getline(iss1, ln_input1, ',');
+        std::getline(iss1, ln_input1, ',');
         std::getline(iss2, ln_input2, ',');
         std::getline(iss2, ln_input2, ',');
-        switch(std::atoi(ln_input2.c_str())){
-            case 4:
-                this->positiveTweets++;
+        switch(std::atoi(ln_input2.c_str())){     // after delimiting, here we're observing the psitivity of a tweet
+            case 4:                               // if it's a four, then it is postivie if it is a zero then it is
+                this->positiveTweets++;          // a negative tweet
                 isPositive = 1;
                 break;
             case 0:
@@ -68,7 +71,7 @@ void TweetData::train(std::string trainFile, std::string testFile){
 
 }
 
-void TweetData::copy(){
+void TweetData::copy(){              // copy simply uses the previous data used for training.
     std::ifstream dataToCopy;
     dataToCopy.open("tweetData.csv");
     if(!dataToCopy.is_open()){throw std::invalid_argument("Cannot open file");}
@@ -93,9 +96,9 @@ void TweetData::copy(){
     }
 }
 
-void TweetData::checkLine(std::string & line, bool pos){
-    std::istringstream iss(line);
-    std::string word;
+void TweetData::checkLine(std::string & line, bool pos){   // chekcline goes through the line we are currently examining
+    std::istringstream iss(line);                        // it then extracts the useful information we need in order to
+    std::string word;                                      // properly train the classifier
     while(std::getline(iss, word,  ' ')){
         if(word.size() < 3) continue;
         remove(word);
@@ -111,13 +114,13 @@ void TweetData::checkLine(std::string & line, bool pos){
     }
 }
 
-RBTree<Word> TweetData::getWords(){
+RBTree<Word> TweetData::getWords(){  // returns the tree thathas all of the words collected in training
     return this->words;
 }
 
-void TweetData::outputData(){
-    std::ofstream of;
-    std::vector<Word> data = this->words.getData();
+void TweetData::outputData(){                        //outputs all of the data that we have collected and puts it in txt
+    std::ofstream of;                               // file that we can use further in the future instead of reading all
+    std::vector<Word> data = this->words.getData(); // over again
     of.open("tweetData.csv");
     for(Word& word : data){
         of << word;

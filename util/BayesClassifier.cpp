@@ -8,7 +8,7 @@
 void BayesClassifier::classify() {
     std::cout << "classifying tweets..." << std::endl;
     if(this->reClassify){
-        std::cout << "Reclassifying..." << std::endl;
+        std::cout << "Reassifying..." << std::endl;
         std::ifstream inFile;
         inFile.open(dataFile);
         if(!inFile.is_open()){throw std::invalid_argument("No such file: " + dataFile);}
@@ -16,7 +16,10 @@ void BayesClassifier::classify() {
         std::getline(inFile,line); // getting rid of first line
         while(std::getline(inFile,line)){
             std::istringstream iss(line);
-            while(std::getline(iss, line, ','));
+            std::getline(iss, line, ',');
+            std::getline(iss, line, ',');
+            std::getline(iss, line, ',');
+            std::getline(iss, line, ',');
             checkline(line);
         }
         calculateAccuracy();
@@ -45,7 +48,7 @@ void BayesClassifier::checkline(std::string &line) {
         Word w(word);
         w.stem();
 
-        if(this->tweetData.containsWord(w)){
+        if(this->tweetData.containsWord(w) && tweetData.getWord(w).getCnt() > 3 ){
             bayesPositive *= ((double)tweetData.getWord(w).getPositiveCnt() / (double)tweetData.getPositiveTweets());
             bayesNegative *= ((double)tweetData.getWord(w).getNegativeCnt() / (double)tweetData.getNegativeTweets());
         }

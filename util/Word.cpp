@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "Word.h"
-
+#include "Word.h"                      // Word holds all of the data for each one of the words that we find in a tweet
+                                       // a lot of its functionality works off of that data the program collects
 Word::Word(){
     this->data        = "";
     this->cntPositive = 0;

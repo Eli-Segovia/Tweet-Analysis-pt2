@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
                              "../data/dev-test-target.csv");
    }
    else if(argc == 2 && arg.compare("-b") == 0){
-       cc = new TrivialDS("../data/dev-train-data.csv",
+       cc = new BayesClassifier("../data/dev-train-data.csv",
                           "../data/dev-train-target.csv",
                           "../data/dev-test-data.csv",
                           "../data/dev-test-target.csv");
