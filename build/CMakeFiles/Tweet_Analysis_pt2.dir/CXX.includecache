@@ -48,6 +48,16 @@ Classifier.h
 TweetData.h
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/TweetData.h
 
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/KNNClassifier.cpp
+KNNClassifier.h
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/KNNClassifier.h
+
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/KNNClassifier.h
+Classifier.h
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/Classifier.h
+math.h
+-
+
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/RBTree.h
 iostream
 -
@@ -77,6 +87,10 @@ ostream
 /home/osboxes/Desktop/Tweet-Analysis-pt2/porter2_stemmer/porter2_stemmer.h
 
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/bstNode.h
+
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/functions.cpp
+functions.h
+/home/osboxes/Desktop/Tweet-Analysis-pt2/util/functions.h
 
 /home/osboxes/Desktop/Tweet-Analysis-pt2/util/functions.h
 iostream
