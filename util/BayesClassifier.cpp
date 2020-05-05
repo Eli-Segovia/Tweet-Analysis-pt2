@@ -15,10 +15,10 @@ void BayesClassifier::classify() {
         std::string line;
         std::getline(inFile,line); // getting rid of first line
         while(std::getline(inFile,line)){
-            std::istringstream iss(line);
-            std::getline(iss, line, ',');
-            std::getline(iss, line, ',');
-            std::getline(iss, line, ',');
+            std::istringstream iss(line);                     // gathering some information from the csv
+            std::getline(iss, line, ',');         // putting the stuff into the line var
+            std::getline(iss, line, ',');         // passing the line var to the checkline method
+            std::getline(iss, line, ',');        // which then does some more processing things
             std::getline(iss, line, ',');
             checkline(line);
         }
@@ -39,7 +39,7 @@ void BayesClassifier::checkline(std::string &line) {
     }
     else of.open("classify.txt", std::ios_base::app);
     std::istringstream iss(line);
-    std::string word;
+    std::string word;                                            // gets the bayes value for both
     double bayesPositive = (double)this->tweetData.getPositiveTweets() / (double)this->tweetData.getTotalTweets();
     double bayesNegative = (double)this->tweetData.getNegativeTweets() / (double)this->tweetData.getTotalTweets();
     while(std::getline(iss, word,  ' ')){
@@ -47,13 +47,13 @@ void BayesClassifier::checkline(std::string &line) {
         remove(word);
         Word w(word);
         w.stem();
-
-        if(this->tweetData.containsWord(w) && tweetData.getWord(w).getCnt() > 3 ){
+                                                                                     // updates the bayes value based
+        if(this->tweetData.containsWord(w) && tweetData.getWord(w).getCnt() > 4 ){   // on the positivity of curr word
             bayesPositive *= ((double)tweetData.getWord(w).getPositiveCnt() / (double)tweetData.getPositiveTweets());
             bayesNegative *= ((double)tweetData.getWord(w).getNegativeCnt() / (double)tweetData.getNegativeTweets());
         }
     }
-    of << normalize(bayesPositive, bayesNegative) << " " << line << std::endl;
+    of << normalize(bayesPositive, bayesNegative) << " " << line << std::endl;   // normalizes both values
     of.close();
 }
 
@@ -90,12 +90,12 @@ void BayesClassifier::calculateAccuracy() {
     of.close();
 }
 
-char BayesClassifier::normalize(double &postiveBayes, double &negativeBayes) {
-    this->evidenceValue = postiveBayes + negativeBayes;
-    double pos = postiveBayes / evidenceValue;
-    double neg = negativeBayes / evidenceValue;
-    //std::cout << pos << " " << neg << std::endl;
-    if(pos == neg){
+char BayesClassifier::normalize(double &postiveBayes, double &negativeBayes) {  // normalilzes the bayes values
+    this->evidenceValue = postiveBayes + negativeBayes;                         // we calculated above
+    double pos = postiveBayes / evidenceValue;                                  // if positive is greater then it is
+    double neg = negativeBayes / evidenceValue;                                 // probably a positive tweet
+    //std::cout << pos << " " << neg << std::endl;                              // if negative is greater then it is
+    if(pos == neg){                                                             // probably a negative tweet
         posi = !posi;
         return posi? '+' : '-';
 

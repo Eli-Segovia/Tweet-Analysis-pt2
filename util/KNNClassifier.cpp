@@ -121,7 +121,6 @@ void KNNClassifier::classify() {
 }
 
 void KNNClassifier::checkline(std::string &line) {
-    std::cout << someValIWillDelete++ << std::endl;
     std::ifstream iFile("classify.txt");
     std::ofstream of;
     if(iFile.is_open() && mode){

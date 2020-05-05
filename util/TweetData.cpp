@@ -76,6 +76,13 @@ void TweetData::copy(){              // copy simply uses the previous data used 
     dataToCopy.open("tweetData.csv");
     if(!dataToCopy.is_open()){throw std::invalid_argument("Cannot open file");}
     std::string line;
+    std::getline(dataToCopy,line);
+    std::string element;
+    std::istringstream input(line);
+    std::getline(input, element, ',');
+    this->positiveTweets = std::atoi(element.c_str());
+    std::getline(input, element);
+    this->negativeTweets = std::atoi(element.c_str());
     while(std::getline(dataToCopy, line)){
         std::istringstream iss(line);
         std::string word;
@@ -88,12 +95,13 @@ void TweetData::copy(){              // copy simply uses the previous data used 
         std::getline(iss, pos);
         Word w(word);
         w.setTotalCnt(std::atoi(tot.c_str()));
-        this->positiveTweets += std::atoi(pos.c_str());
-        this->negativeTweets += std::atoi(neg.c_str());
         w.setNegativeCnt(std::atoi(neg.c_str()));
         w.setPositiveCnt(std::atoi(pos.c_str()));
         this->words.add(w);
     }
+    std::cout << this->getPositiveTweets() << std::endl;
+    std::cout << this->getNegativeTweets() << std::endl;
+    std::cout << this->getTotalTweets() << std::endl;
 }
 
 void TweetData::checkLine(std::string & line, bool pos){   // chekcline goes through the line we are currently examining
@@ -122,6 +130,10 @@ void TweetData::outputData(){                        //outputs all of the data t
     std::ofstream of;                               // file that we can use further in the future instead of reading all
     std::vector<Word> data = this->words.getData(); // over again
     of.open("tweetData.csv");
+    of << this->positiveTweets;
+    of << ",";
+    of << this->negativeTweets;
+    of << "\n";
     for(Word& word : data){
         of << word;
         of << ",";

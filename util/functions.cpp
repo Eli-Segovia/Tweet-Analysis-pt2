@@ -3,7 +3,7 @@
 //
 #include "functions.h"
 
-void remove(std::string& word){
+void remove(std::string& word){        // used to remove nasty words and html crap
     while(word.size() > 0){
         for(char& i : word){
             if(std::isalpha(i)){
